@@ -54,6 +54,40 @@ const addTask = async (req, res) => {
   }
 }
 
+// @desc Updates a task
+// @route PUT /api/tasks/:id
+const updateTask = async (req, res) => {
+  try {
+    const { title, completed } = req.body
+
+    if (!title && !completed) {
+      return
+    }
+
+    const id = req.params.id
+    const task = await Task.findById(id)
+
+    if (!task) {
+      return res
+        .status(404)
+        .json({ error: `Task with the id of ${id} was not found` })
+    }
+
+    if (task.user.toString() !== req.userId) {
+      return res.status(403).json({ error: "Access denied" })
+    }
+
+    if (title !== undefined) task.title = title
+    if (completed !== undefined) task.completed = completed
+
+    await task.save()
+    res.status(200).json({ message: "Task updated succesfully", task: task })
+  } catch (error) {
+    console.error("Failed to update task:", error)
+    res.status(500).json({ error: "Server error" })
+  }
+}
+
 // @desc Deletes a task
 // @route DELETE /api/tasks/:id
 const deleteTask = async (req, res) => {
@@ -79,4 +113,4 @@ const deleteTask = async (req, res) => {
   }
 }
 
-export { getTasks, getOneTask, addTask, deleteTask }
+export { getTasks, getOneTask, addTask, deleteTask, updateTask }

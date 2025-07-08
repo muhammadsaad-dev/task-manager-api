@@ -5,6 +5,7 @@ import {
   getOneTask,
   addTask,
   deleteTask,
+  updateTask,
 } from "../controllers/taskController.js"
 
 const taskRouter = Router()
@@ -14,6 +15,8 @@ taskRouter.get("/", authMiddleware, getTasks)
 taskRouter.get("/:id", authMiddleware, getOneTask)
 
 taskRouter.post("/", authMiddleware, addTask)
+
+taskRouter.put("/:id", authMiddleware, updateTask)
 
 taskRouter.delete("/:id", authMiddleware, deleteTask)
 
