@@ -29,6 +29,6 @@ A simple and secure RESTful API built with **Node.js**, **Express**, and **Mongo
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/task-manager-api.git
+git clone https://muhammadsaad-dev/task-manager-api.git
 cd task-manager-api
 ```
